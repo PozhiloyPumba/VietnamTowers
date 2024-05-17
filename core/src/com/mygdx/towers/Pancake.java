@@ -14,7 +14,7 @@ public class Pancake {
     private final float scaledHeight;
 
     private final float WIDTH = 100;
-    private final float HEIGHT = 20;
+    private final float HEIGHT = 30;
     private final float holeFactor = 0.1f;
 
     // x and y it is center
@@ -31,7 +31,7 @@ public class Pancake {
     }
 
     public float getYUpGround() {
-        return y + scaledHeight;
+        return y + HEIGHT;
     }
 
     private void drawGround(ShapeRenderer renderer, float yBias) {
@@ -50,26 +50,26 @@ public class Pancake {
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
 		renderer.setColor(color_);
-        renderer.rect(x - scaledWidth / 2, y, scaledWidth, scaledHeight);
+        renderer.rect(x - scaledWidth / 2, y, scaledWidth, HEIGHT);
         renderer.end();
         renderer.begin(ShapeRenderer.ShapeType.Line);
 		renderer.setColor(Color.BLACK);
-        renderer.line(x - scaledWidth / 2, y, x - scaledWidth / 2, y + scaledHeight);
-        renderer.line(x + scaledWidth / 2, y, x + scaledWidth / 2, y + scaledHeight);
+        renderer.line(x - scaledWidth / 2, y, x - scaledWidth / 2, y + HEIGHT);
+        renderer.line(x + scaledWidth / 2, y, x + scaledWidth / 2, y + HEIGHT);
         renderer.end();
 
-        drawGround(renderer, scaledHeight / 2);
+        drawGround(renderer, HEIGHT - scaledHeight / 2);
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
 		renderer.setColor(Color.BLACK);
-        renderer.ellipse(x - scaledWidth * holeFactor / 2, y + scaledHeight, scaledWidth * holeFactor, scaledHeight * holeFactor);
+        renderer.ellipse(x - scaledWidth * holeFactor / 2, y + HEIGHT - scaledHeight * holeFactor / 2, scaledWidth * holeFactor, scaledHeight * holeFactor);
         renderer.end();
     }
 
     public boolean contains(Vector2 pos) {
-        Ellipse bottom = new Ellipse(x - scaledWidth / 2, y - scaledHeight / 2, scaledWidth, scaledHeight);
-        Ellipse up = new Ellipse(x - scaledWidth / 2, y + scaledHeight / 2, scaledWidth, scaledHeight);
-        Rectangle center = new Rectangle(x - scaledWidth / 2, y, scaledWidth, scaledHeight);
+        Ellipse bottom = new Ellipse(x, y, scaledWidth, scaledHeight);
+        Ellipse up = new Ellipse(x, y + scaledHeight, scaledWidth, scaledHeight);
+        Rectangle center = new Rectangle(x - scaledWidth / 2, y, scaledWidth, HEIGHT);
 
         return center.contains(pos) || bottom.contains(pos) || up.contains(pos);
     }

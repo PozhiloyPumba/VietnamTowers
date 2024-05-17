@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("HanoiTowers");
-		// config.setWindowedMode(1440, 900);
+		config.setWindowedMode(1440, 900);
 		new Lwjgl3Application(new HanoiTowers(), config);
 	}
 }
