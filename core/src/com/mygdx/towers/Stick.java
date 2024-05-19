@@ -15,8 +15,9 @@ public class Stick {
     private final float height;
     private final float x_;
     private final float y_;
+	public final boolean initial;
 
-	public Stick(float x, float y, float w, float h, Rectangle field) {
+	public Stick(float x, float y, float w, float h, Rectangle field, boolean init) {
 		disks = new Array<>();
 
 		width = w;
@@ -24,6 +25,7 @@ public class Stick {
 		x_ = x;
 		y_ = y;
 		f = field;
+		initial = init;
 	}
 
 	public boolean contains(Vector2 p) {
@@ -31,20 +33,24 @@ public class Stick {
 	}
 
 	public boolean grabLast(Vector2 p) {
-		if (disks.isEmpty()) {
-			return false;
-		}
+		if (disks.isEmpty()) return false;
+
 		Pancake last = disks.peek();
 		return last.contains(p);
 	}
 
 	public void moveLast(float deltaX, float deltaY) {
-		if (disks.isEmpty()) {
-			return;
-		}
+		if (disks.isEmpty()) return;
+
 		Pancake last = disks.peek();
 		last.x += deltaX;
 		last.y += deltaY;
+	}
+
+	public int getBiggest() {
+		if (disks.isEmpty()) return 0;
+		
+		return disks.first().number;
 	}
 
 	public boolean add(Pancake disk) {
@@ -56,9 +62,9 @@ public class Stick {
 		}
 
 		Pancake last = disks.peek();
-		if(disk.scale_ >= last.scale_) {
-			return false;
-		}
+
+		if(disk.number > last.number) return false;
+
 		disk.x = x_;
 		disk.y = last.getYUpGround();
 
@@ -72,7 +78,7 @@ public class Stick {
 
 	public void drawPlane(ShapeRenderer renderer) {
 		renderer.begin(ShapeRenderer.ShapeType.Filled);
-		renderer.setColor(Color.DARK_GRAY);
+		renderer.setColor(initial ? Color.DARK_GRAY : Color.GOLD);
 		renderer.rect(x_ - width / 2, y_ - height / 2, width, height);
 		renderer.end();
 
@@ -88,10 +94,25 @@ public class Stick {
 		}
 	}
 
-	static public void move(Stick src, Stick dst) {
+	public int getSize() {
+		return disks.size;
+	}
+
+	public Array<Integer> returnDisks() {
+		Array<Integer> nums = new Array<>();
+
+		for (Pancake p: disks) {
+			nums.add(p.number);
+		}
+		return nums;
+	}
+
+	static public int move(Stick src, Stick dst) {
 		Pancake tmp = src.removeLast();
-		if(dst.add(tmp))
-			return;
+
+		if(dst.add(tmp)) return Boolean.compare(src != dst, false);
+
 		src.add(tmp);
+		return 0;
 	}
 }

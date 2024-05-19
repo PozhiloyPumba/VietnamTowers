@@ -7,8 +7,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 public class Pancake {
-    public final float scale_;
+    private final float scale;
     public final Color color_;
+    public final int number;
 
     private final float scaledWidth;
     private final float scaledHeight;
@@ -21,9 +22,10 @@ public class Pancake {
     public float x;
     public float y;
 
-    public Pancake(float x_, float y_, Color color, float scale) {
+    public Pancake(float x_, float y_, Color color, int n) {
         color_ = color;
-        scale_ = scale;
+        number = n;
+        scale = 0.2f + 0.3f * number;
         scaledHeight = HEIGHT * scale * 0.95f;
         scaledWidth = WIDTH * scale;
         x = x_;
@@ -68,7 +70,7 @@ public class Pancake {
 
     public boolean contains(Vector2 pos) {
         Ellipse bottom = new Ellipse(x, y, scaledWidth, scaledHeight);
-        Ellipse up = new Ellipse(x, y + scaledHeight, scaledWidth, scaledHeight);
+        Ellipse up = new Ellipse(x, y + HEIGHT, scaledWidth, scaledHeight);
         Rectangle center = new Rectangle(x - scaledWidth / 2, y, scaledWidth, HEIGHT);
 
         return center.contains(pos) || bottom.contains(pos) || up.contains(pos);
