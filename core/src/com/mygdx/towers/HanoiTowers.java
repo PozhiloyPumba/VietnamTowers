@@ -160,9 +160,11 @@ public class HanoiTowers extends ApplicationAdapter {
 			layout.setText(font, "MOVES: " + moves);
 			font.draw(batch, layout, (width - layout.width) / 2.f, 2.f / 3.f * height);
 
-			font.getData().setScale(2.3f);
-			layout.setText(font, "BOT MOVES: " + botMoves);
-			font.draw(batch, layout, (width - layout.width) / 2.f, 2.f / 3.f * height - 2.f * layout.height);
+			if (botMoves > 0) {
+				font.getData().setScale(2.3f);
+				layout.setText(font, "BOT MOVES: " + botMoves);
+				font.draw(batch, layout, (width - layout.width) / 2.f, 2.f / 3.f * height - 2.f * layout.height);
+			}
 
 			font.getData().setScale(1.9f);
 			layout.setText(font, "Press \'R\' to restart");
@@ -187,12 +189,14 @@ public class HanoiTowers extends ApplicationAdapter {
 			layout.setText(font, String.format("%d", moves));
 			font.draw(batch, layout, 2.f * (width - layout.width) / 3.f, height * yourMovesPos);
 
-			float botMovesPos = 13.5f / 20.f;
-			layout.setText(font, "BOT MOVES: ");
-			font.draw(batch, layout, (width - layout.width) / 3.f, height * botMovesPos);
-			
-			layout.setText(font, String.format("%d", botMoves));
-			font.draw(batch, layout, 2.f * (width - layout.width) / 3.f, height * botMovesPos);
+			if (botMoves > 0) {
+				float botMovesPos = 13.5f / 20.f;
+				layout.setText(font, "BOT MOVES: ");
+				font.draw(batch, layout, (width - layout.width) / 3.f, height * botMovesPos);
+				
+				layout.setText(font, String.format("%d", botMoves));
+				font.draw(batch, layout, 2.f * (width - layout.width) / 3.f, height * botMovesPos);
+			}
 		}
 		
 		batch.end();
